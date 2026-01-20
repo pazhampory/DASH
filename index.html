@@ -1,164 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Kozhikode RO Urban – Chitty Dashboard</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-  * { box-sizing: border-box; font-family: Inter, sans-serif; }
-  body {
-    margin: 0;
-    background: #f2f5f9;
-    height: 100vh;
-    overflow: hidden; /* 🚫 NO SCROLL */
-  }
-
-  .container {
-    height: 100vh;
-    max-width: 1100px;
-    margin: auto;
-    padding: 16px;
-    border: 2px solid #1e3c72;
-    border-radius: 12px;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-  }
-
-  h1 {
-    text-align: center;
-    color: #1e3c72;
-    margin: 6px 0 12px;
-    font-size: 22px;
-  }
-
-  .top-section {
-    flex: 1;
-    display: flex;
-    gap: 16px;
-    align-items: center;
-  }
-
-  .kpis {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .kpi {
-    padding: 12px;
-    background: #f7f9fc;
-    border-left: 5px solid #1e3c72;
-    border-radius: 10px;
-  }
-
-  .kpi span {
-    font-size: 13px;
-    color: #555;
-  }
-
-  .kpi strong {
-    font-size: 20px;
-    display: block;
-    margin-top: 2px;
-  }
-
-  .kpi.highlight {
-    background: #e8f5e9;
-    border-left-color: #2e7d32;
-  }
-
-  .chart-box {
-    flex: 1;
-    position: relative;
-  }
-
-  canvas {
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  /* 📱 Mobile fit */
-  @media (max-width: 768px) {
-    h1 { font-size: 18px; }
-    .top-section {
-      flex-direction: column;
-      gap: 12px;
-    }
-    .kpi strong {
-      font-size: 18px;
-    }
-  }
-</style>
+  <title>Kozhikode RO Urban – Chitty Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<div class="container">
+<h1>KOZHIKODE RO URBAN (994)</h1>
+<p id="asOn"></p>
 
-  <h1>Kozhikode RD Urban</h1>
-
-  <div class="top-section">
-
-    <!-- KPIs -->
-    <div class="kpis">
-      <div class="kpi">
-        <span>Total Chitty Target (₹ in Lakhs)</span>
-        <strong>5,000</strong>
-      </div>
-
-      <div class="kpi">
-        <span>Total Business Done (₹ in Lakhs)</span>
-        <strong>3,825</strong>
-      </div>
-
-      <div class="kpi highlight">
-        <span>Target Achieved</span>
-        <strong>76.5%</strong>
-      </div>
-    </div>
-
-    <!-- Pie -->
-    <div class="chart-box">
-      <canvas id="chittyPie"></canvas>
-    </div>
-
-  </div>
-
+<div class="cards">
+  <div class="card"><h3>Target</h3><p id="target"></p></div>
+  <div class="card"><h3>Achieved</h3><p id="achieved"></p></div>
+  <div class="card"><h3>Remaining</h3><p id="remaining"></p></div>
+  <div class="card"><h3>% Achieved</h3><p id="percent"></p></div>
 </div>
 
-<script>
-  const totalTargetLakhs = 5000;
-  const totalAchievedLakhs = 3825;
+<canvas id="chart"></canvas>
 
-  const achievedPercent = ((totalAchievedLakhs / totalTargetLakhs) * 100).toFixed(1);
-  const balancePercent = (100 - achievedPercent).toFixed(1);
+<table>
+<thead>
+<tr>
+  <th>Branch</th><th>Target</th><th>Achieved</th><th>%</th><th>Remaining</th>
+</tr>
+</thead>
+<tbody id="table"></tbody>
+</table>
 
-  new Chart(document.getElementById('chittyPie'), {
-    type: 'pie',
-    data: {
-      labels: [
-        `Achieved (${achievedPercent}%)`,
-        `Balance (${balancePercent}%)`
-      ],
-      datasets: [{
-        data: [achievedPercent, balancePercent],
-        backgroundColor: ['#2e7d32', '#e0e0e0']
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'bottom' }
-      }
-    }
-  });
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
